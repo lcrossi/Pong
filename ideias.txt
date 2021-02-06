@@ -1,0 +1,6 @@
+Dificuldade:
+    - Altura da raquete;
+
+
+Settings: 
+    - Cor do campo/raquetes; (Temas)
