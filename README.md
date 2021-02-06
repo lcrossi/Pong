@@ -1,3 +1,3 @@
 # Pong
 
-Game inspired by the old Atari game "Pong".
+Game inspired by the legendary Atari game "Pong".
