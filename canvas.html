@@ -3,28 +3,39 @@
         <canvas id="folha" width="600" height="500" ></canvas>
 
         <script>
-            var folhaDesenho = document.getElementById("folha");
-            var areaDesenho = folhaDesenho.getContext("2d");
+            window.onload = function() {
+                setInterval(executar, 1000/30); //1000ms / 30 = 0,03s
+            }
 
-            var larguraCampo = 600;
-            var alturaCampo = 500;
-            var larguraLinha = 5;
-            var larguraBola = 5;
-            var alturaRaquete = 50;
+            var posicaoBolaX = posicaoBolaY = 10;
+            function executar () {
+                var folhaDesenho = document.getElementById("folha");
+                var areaDesenho = folhaDesenho.getContext("2d");
 
-            
-            areaDesenho.fillStyle = '#286047';
-            areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo); //X, Y, Largura, Altura
+                var larguraCampo = 600;
+                var alturaCampo = 500;
+                var espessuraRede = 5;
+                var diametroBola = 10;
+                var alturaRaquete = 50;             
 
-            areaDesenho.fillStyle = '#FFFFFF'
-            areaDesenho.fillRect(larguraCampo/2 - larguraLinha/2, 0, larguraLinha, alturaCampo); //linha de centro
+                areaDesenho.fillStyle = '#286047';
+                areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo); //X, Y, Largura, Altura
 
-            areaDesenho.fillRect(0, 200, larguraLinha, alturaRaquete);//Raquete 1
-            
-            areaDesenho.fillRect(larguraCampo-larguraLinha, 200, larguraLinha, alturaRaquete);//Raquete 2
+                areaDesenho.fillStyle = '#FFFFFF'
+                areaDesenho.fillRect(larguraCampo/2 - espessuraRede/2, 0, espessuraRede, alturaCampo); //linha de centro
 
-            areaDesenho.fillRect(130, 130, larguraBola, larguraBola);//Bola 
+                areaDesenho.fillRect(0, 200, espessuraRede, alturaRaquete);//Raquete 1
+                
+                areaDesenho.fillRect(larguraCampo-espessuraRede, 200, espessuraRede, alturaRaquete);//Raquete 2
+                            
+                areaDesenho.fillRect(posicaoBolaX - diametroBola/2, posicaoBolaY - diametroBola/2, diametroBola, diametroBola);//Bola 
+                
 
+                posicaoBolaX = posicaoBolaX + 1;
+                posicaoBolaY = posicaoBolaY + 1;
+               
+                console.log("tic-tac");
+            }
         </script>
     </body>
 </html>
