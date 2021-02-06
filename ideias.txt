@@ -1,6 +1,20 @@
 Dificuldade:
     - Altura da raquete;
-    - Efeito raquete>>>
+    - Efeito raquete;
+    - Velocidade da IA;
+    - Velocidade da bola;
 
 Settings:
-    - Cor do campo/raquetes; (Temas)
+    - Cor do campo/raquetes (temas);
+    - Menu de pausa: { 
+         > Resume,
+         > Restar,
+         > Settings,
+         > Exit
+    };
+    
+Menu Iniciar:
+    - Jogar;
+    - Dificuldade;
+    - Configurações;
+    - Sobre o jogo;
