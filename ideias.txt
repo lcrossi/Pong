@@ -1,6 +1,6 @@
 Dificuldade:
     - Altura da raquete;
+    - Efeito raquete>>>
 
-
-Settings: 
+Settings:
     - Cor do campo/raquetes; (Temas)
