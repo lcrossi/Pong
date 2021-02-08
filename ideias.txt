@@ -3,6 +3,7 @@ Dificuldade:
     - Efeito raquete;
     - Velocidade da IA;
     - Velocidade da bola;
+    - Aumento de nível prograssivo: a cada X pontos, o jogo fica mais difícil;
 
 Settings:
     - Cor do campo/raquetes (temas);
@@ -18,3 +19,8 @@ Menu Iniciar:
     - Dificuldade;
     - Configurações;
     - Sobre o jogo;
+
+Correções:
+    - Hack da Thays -> Aumentar a dificuldade do bot se Muitos pontos forem feitos num mesmo período 
+    de tempo (Fragilidade do nivel do bot), o que implica num looping de pontos sem q o jogador 1 se movimente.
+    Depois voltar para o normal depois de alguns segundos
