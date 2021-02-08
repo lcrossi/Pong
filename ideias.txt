@@ -23,4 +23,7 @@ Menu Iniciar:
 Correções:
     - Hack da Thays -> Aumentar a dificuldade do bot se Muitos pontos forem feitos num mesmo período 
     de tempo (Fragilidade do nivel do bot), o que implica num looping de pontos sem q o jogador 1 se movimente.
-    Depois voltar para o normal depois de alguns segundos
+    Depois voltar para o normal depois de alguns segundos.
+
+    - Pausas para movimentar o cursor e nao perder o ponto! -> Se muitas pausas estiverem sendo feitas antes de rebatidas do jogador,
+     bloquear as pausas por um tempo.

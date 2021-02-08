@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font-family: 'Roboto', 'Roboto Mono', sans-serif;
+	vertical-align: baseline;
+}
+
+:root{
+    --Font-menu-color: rgb(83, 81, 81);
+}
+
+#btnPausar{
+    position: absolute;
+    top:10;
+    left:10;
+}
+
+#secaoPausa{
+    color: var(--Font-menu-color);
+    font-family: 'Roboto Mono';
+    font-weight: 600;
+    font-size: 18;
+    position: absolute;
+    top: 150;
+    left: 260;
+}
+.flexColumn{
+    display: flex;
+    flex-direction: column;
+}
+
+.btnsMenuPausa{
+    cursor: pointer;
+    padding: 10px 10px;
+    border-radius: 2px;
+}
+
+.hide{
+    display: none;
+}
+
+#pause-play{
+    height: 30;
+    width: 30;
+    position: absolute;
+    top:10;
+    left:10;
+    background-color: white;
+    border-radius: 1em;
+}
