@@ -24,8 +24,9 @@
     font-size: 18;
     position: absolute;
     top: 150;
-    left: 260;
+    left: 230;
 }
+
 .flexColumn{
     display: flex;
     flex-direction: column;
@@ -49,4 +50,8 @@
     left:10;
     background-color: white;
     border-radius: 1em;
+}
+
+svg{
+    cursor: pointer;
 }
