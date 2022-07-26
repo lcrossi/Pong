@@ -8,7 +8,8 @@
         window.onload = function () {
             iniciar(); //inicializa variaveis
             //Rodar o jogo dentro do laço
-            IdIntervalo = setInterval(pausado ? pausar : executar, 1000/30); //1000ms / 30 -> 30 quadros por seg   
+            IdIntervalo = setInterval(pausado ? pausar : executar, 1000/80); //1000ms / 80 -> 80 quadros por seg
+            tempoDeJogo = setInterval(pausado ? pausar : executarRelogio, 1000); //1s -> atualizar tempo
         }
 
         function evento() {
@@ -20,11 +21,11 @@
             posicaoJogador1 = posicaoJogador2 = 40;
             memoriaPosicaoJogador1 = 40;
             pontuacaoJogador1 = pontuacaoJogador2 = 0;
-            velocidadeJogador2 = 8;
+            velocidadeJogador2 = 5;
 
             posicaoBolaX = posicaoBolaY = 10;
-            velocidadeBolaX = velocidadeBolaY = 12;
-            memoriaVelocidadeX = memoriaVelocidadeY = 12; //Ao pausar e continuar, usado para salvar os valores das velocidades antes de serem zeradas
+            velocidadeBolaX = velocidadeBolaY = 7;
+            memoriaVelocidadeX = memoriaVelocidadeY = 7; //Ao pausar e continuar, usado para salvar os valores das velocidades antes de serem zeradas
 
             //Campo
             larguraCampo = 600;
@@ -35,9 +36,23 @@
             corElementos = '#FFFFFF';  
 
             //Raquete
-            alturaRaquete = 70;
+            alturaRaquete = 80;
             espessuraRaquete = 10;
-            efeitoRaquete = 0.5; //>1 deixa o jogo muito dificil
+            efeitoRaquete = 0.4; //>1 deixa o jogo muito dificil
+
+            //Relógio
+            tempoSegundos = 0;
+            tempoMinutos = 0;
+            tempoLevel = 1;
+            memoriaTempo = [0,0];
+            corRelogio = "red"
+
+            //Level
+            level = 1
+            memoriaLevel = 1
+            fatorLevelBola = 1.1
+            fatorLevelIA = 1.05
+
 
             folhaDesenho = document.getElementById("folha");
             areaDesenho = folhaDesenho.getContext("2d");
@@ -70,7 +85,16 @@
 
             //Escrever a pontuação dos jogadores
             areaDesenho.fillText("Jogador 1 - " + pontuacaoJogador1 + " pontos", 100, 100);              
-            areaDesenho.fillText("IA - " + pontuacaoJogador2 + " pontos", larguraCampo - 200, 100); 
+            areaDesenho.fillText("IA - " + pontuacaoJogador2 + " pontos", larguraCampo - 200, 100);
+
+            //Desenhando level
+            areaDesenho.fillText("Level: " + level, larguraCampo - 70, 20)
+
+            //Desenhando relógio
+            areaDesenho.fillStyle = corRelogio;
+            areaDesenho.fillText(tempoMinutos + " : " + tempoSegundos, larguraCampo/2.07, 20)
+
+
         }
 
         function principal () {
@@ -124,6 +148,22 @@
                 posicaoJogador2 = posicaoJogador2 - velocidadeJogador2;
             }
         }
+
+        function contarTempo () {
+            if(tempoSegundos < 59) {
+                tempoSegundos++
+                tempoLevel++
+            } else {
+                tempoSegundos = 0
+                tempoMinutos++
+                tempoLevel++
+            }
+
+            if(tempoSegundos%25 == 0) {
+                aumentarLevel()
+            }
+        }
+
         
         function recolocarBola () {
             //Recoloca bola no centro
@@ -131,6 +171,13 @@
             posicaoBolaY = larguraCampo/2;
             velocidadeBolaX = -velocidadeBolaX;
             velocidadeBolaY = 5;
+        }
+
+        function aumentarLevel () {
+            level++
+            velocidadeJogador2 = velocidadeJogador2*fatorLevelIA;
+            velocidadeBolaX = velocidadeBolaX*fatorLevelBola;
+            velocidadeBolaY = velocidadeBolaY*fatorLevelBola;
         }
 
         function menuPausa () {
@@ -150,6 +197,7 @@
             velocidadeBolaX = 0; //Zerando valores para "Pausar o jogo"
             velocidadeBolaY = 0;
             velocidadeJogador2 = 0;
+            memoriaTempo = [tempoMinutos,tempoSegundos]
             folhaDesenho.addEventListener('mousemove', function(e){
               posicaoJogador1 = memoriaPosicaoJogador1;
             })
@@ -162,6 +210,8 @@
             velocidadeBolaX = memoriaVelocidadeX;
             velocidadeBolaY = memoriaVelocidadeY;
             velocidadeJogador2 = 8;
+            tempoMinutos = memoriaTempo[0]
+            tempoSegundos = memoriaTempo[1]
             folhaDesenho.addEventListener('mousemove', function(e){
                 posicaoJogador1 = e.clientY - alturaRaquete/2;
             })
@@ -179,6 +229,10 @@
             desenhar();
             principal();
         }
+
+        function executarRelogio () {
+            contarTempo();
+        }
     </script>
     <body>
         <canvas id="folha" width="600" height="500"></canvas>
@@ -188,9 +242,9 @@
             <br/>
             <button type="button" id="btnReiniciar" class="btnsMenuPausa" onclick="window.location.reload()">Reiniciar</button>
             <br/>
-            <button type="button" id="btnConfiguracoes" class="btnsMenuPausa">Configurações</button>
-            <br/>
-            <button type="button" id="btnSair" class="btnsMenuPausa">Sair</button>
+            <!-- <button type="button" id="btnConfiguracoes" class="btnsMenuPausa">Configurações</button>
+            <br/> -->
+            <button type="button" id="btnSair" class="btnsMenuPausa" onclick="window.close()">Sair</button>
         </div>    
     </body>
 </html>
