@@ -22,14 +22,17 @@
             memoriaPosicaoJogador1 = 40;
             pontuacaoJogador1 = pontuacaoJogador2 = 0;
             velocidadeJogador2 = 5;
+            memoriaVelocidadeJogador2 = 5;
 
             posicaoBolaX = posicaoBolaY = 10;
             velocidadeBolaX = velocidadeBolaY = 7;
             memoriaVelocidadeX = memoriaVelocidadeY = 7; //Ao pausar e continuar, usado para salvar os valores das velocidades antes de serem zeradas
 
             //Campo
-            larguraCampo = 600;
-            alturaCampo = 500;
+            larguraCampo = window.innerWidth;
+            document.getElementById("folha").setAttribute('width', larguraCampo)
+            alturaCampo = window.innerHeight;
+            document.getElementById("folha").setAttribute('height', alturaCampo)
             espessuraRede = 5;
             diametroBola = 10;
             corCampo = '#286047';        
@@ -175,9 +178,14 @@
 
         function aumentarLevel () {
             level++
-            velocidadeJogador2 = velocidadeJogador2*fatorLevelIA;
-            velocidadeBolaX = velocidadeBolaX*fatorLevelBola;
-            velocidadeBolaY = velocidadeBolaY*fatorLevelBola;
+            if (velocidadeBolaX < 80 && velocidadeBolaX > -80 && velocidadeBolaX*(0.05*level + 1)<80 && velocidadeBolaX*(0.05*level + 1)>-80) {
+                velocidadeJogador2 = velocidadeJogador2*(0.02*level + 1);
+                velocidadeBolaX = velocidadeBolaX*(0.05*level + 1);
+                velocidadeBolaY = velocidadeBolaY*(0.05*level + 1);
+            } else {
+                velocidadeBolaX = (velocidadeBolaX/velocidadeBolaX)*80
+            }
+            
         }
 
         function menuPausa () {
@@ -193,6 +201,7 @@
             menuPausa();
             memoriaVelocidadeX = velocidadeBolaX; //Alocando velocidades e posições atuais em variaveis
             memoriaVelocidadeY = velocidadeBolaY;
+            memoriaVelocidadeJogador2 = velocidadeJogador2;
             memoriaPosicaoJogador1 = posicaoJogador1;
             velocidadeBolaX = 0; //Zerando valores para "Pausar o jogo"
             velocidadeBolaY = 0;
@@ -206,10 +215,9 @@
 
         function continuar () {
             document.getElementById('secaoPausa').classList.toggle('hide', true);//"Escondendo" o menu de pausa
-            console.log('hide');
             velocidadeBolaX = memoriaVelocidadeX;
             velocidadeBolaY = memoriaVelocidadeY;
-            velocidadeJogador2 = 8;
+            velocidadeJogador2 = memoriaVelocidadeJogador2;
             tempoMinutos = memoriaTempo[0]
             tempoSegundos = memoriaTempo[1]
             folhaDesenho.addEventListener('mousemove', function(e){
@@ -220,7 +228,7 @@
         }
 
         document.addEventListener("keydown", e =>{
-            if(e.key == "Delete") {
+            if(e.key == "Delete" || e.key == "Space") {
                 pausado ? continuar() : pausar();
             }
         })
@@ -235,7 +243,7 @@
         }
     </script>
     <body>
-        <canvas id="folha" width="600" height="500"></canvas>
+        <canvas id="folha" width="800" height="600"></canvas>
         <svg id="pause-play" alt="pause/play"  onclick="pausado ? continuar() : pausar()" height="480pt" viewBox="0 0 480 480" width="480pt" xmlns="http://www.w3.org/2000/svg"><path d="m240 0c-132.546875 0-240 107.453125-240 240s107.453125 240 240 240 240-107.453125 240-240c-.148438-132.484375-107.515625-239.851562-240-240zm0 464c-123.710938 0-224-100.289062-224-224s100.289062-224 224-224 224 100.289062 224 224c-.140625 123.652344-100.347656 223.859375-224 224zm0 0"/><path d="m141.449219 122.144531c-2.332031-2.167969-5.726563-2.746093-8.644531-1.476562-2.917969 1.269531-4.804688 4.148437-4.804688 7.332031v208c0 3.183594 1.886719 6.0625 4.804688 7.332031 2.917968 1.269531 6.3125.691407 8.644531-1.476562l112-104c1.625-1.511719 2.546875-3.632813 2.546875-5.855469s-.921875-4.34375-2.546875-5.855469zm2.550781 195.511719v-171.3125l92.238281 85.65625zm0 0"/><path d="m264 120c-4.417969 0-8 3.582031-8 8v208c0 4.417969 3.582031 8 8 8s8-3.582031 8-8v-208c0-4.417969-3.582031-8-8-8zm0 0"/><path d="m344 120c-4.417969 0-8 3.582031-8 8v208c0 4.417969 3.582031 8 8 8s8-3.582031 8-8v-208c0-4.417969-3.582031-8-8-8zm0 0"/></svg>
         <div id="secaoPausa">
             <button type="button" id="btnContinuar" class="btnsMenuPausa" onclick="continuar()">Continuar</button>
